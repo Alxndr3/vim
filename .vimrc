@@ -62,11 +62,14 @@ map <C-Enter> O<ESC>j
 
 " Save file
 inoremap <C-s> <ESC>:w<CR>
-noremap <C-S>       :update<CR>
-vnoremap <C-S>      <C-C>:update<CR>
+noremap <C-S> :update<CR>
+vnoremap <C-S> <C-C>:update<CR>
 "nnoremap <C-L> :w<CR>
 " inoremap <C-S>      <C-O>:update<CR>
 
+" Excecute current python script.
+map <C-p> :w<CR>:!python3 %<CR>
+imap <C-p> <Esc>:w<CR>:!python3 l%<CR>
 
 " Shortcutting split navigation.
 map <C-h> <C-w>h
