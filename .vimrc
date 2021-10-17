@@ -17,22 +17,25 @@ Plugin 'nvie/vim-flake8'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
+set encoding=utf-8
+set shell=zsh 
 
 " Color scheme
-colorscheme medic_chalk
+colorscheme monokai
 
 " Set vim transparent mode
-let t:is_transparent = 0                                                                        
+let t:is_transparent = 0                                                            
 function! Toggle_transparent_background()                                                       
   if t:is_transparent == 0                                                                      
-    hi Normal guibg=#111111 ctermbg=black                                                       
+    hi Normal guibg=NONE ctermbg=NONE
     let t:is_transparent = 1                                                                    
   else                                                                                          
-    hi Normal guibg=NONE ctermbg=NONE                                                           
+    hi Normal guibg=#111111 ctermbg=black                                                       
+    colorscheme monokai
     let t:is_transparent = 0                                                                    
   endif                                                                                         
 endfunction                                                                                     
-nnoremap <C-x><C-t> :call Toggle_transparent_background()<CR>
+nnoremap <C-x>x :call Toggle_transparent_background()<CR>
 
 let python_highlight_all=1
 
@@ -40,6 +43,16 @@ syntax on
 
 " PEP 8 identation
 au BufNewFile,BufRead *.py
+    \ set encoding=UTF-8 |
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix
+
+au BufNewFile,BufRead *.sh
     \ set encoding=UTF-8 |
     \ set tabstop=4 |
     \ set softtabstop=4 |
@@ -63,6 +76,11 @@ au BufNewFile,BufRead *.js
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2
+
+au BufNewFile,BufRead *.conf
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4
 
 " Enabling folding
 set foldmethod=indent
@@ -100,8 +118,12 @@ noremap <C-S> :update<CR>
 vnoremap <C-S> <C-C>:update<CR>
 
 " Excecute current python script.
-map <C-p> :w<CR>:!clear<CR>:!python3 %<CR>
-imap <C-p> <Esc>:!clear<CR>:w<CR>:!python3 l%<CR>
+map <C-r>p :w<CR>:!clear<CR>:!python3 %<CR>
+imap <C-r>p <Esc>:!clear<CR>:w<CR>:!python3 %<CR>
+
+" Excecute current shell script.
+map <C-r>s :w<CR>:!clear<CR>:!bash %<CR>
+imap <C-r>s <Esc>:!clear<CR>:w<CR>:!bash %<CR>
 
 " Shortcutting split navigation.
 map <C-h> <C-w>h
@@ -111,7 +133,8 @@ map <C-k> <C-w>k
 map <C-c>c <C-c>:
 
 " Open terminal
-map <C-t> <C-c>:terminal<CR><C-w>:resize -5<CR>. ./venv/bin/activate && clear<CR>
+map <C-t>t <C-c>:terminal<CR><C-w>:resize -8<CR>. ./venv/bin/activate && clear<CR>
+"map <C-t>t <C-c>:terminal<CR><C-w>:resize -7<CR>clear<CR>
 
 " autocmd VimEnter * terminal 
 " autocmd VimEnter * resize 8
@@ -119,8 +142,12 @@ map <C-t> <C-c>:terminal<CR><C-w>:resize -5<CR>. ./venv/bin/activate && clear<CR
 " Display and select buffer. 
 map <C-b> <C-c>:w<CR><C-c>:ls b<CR>:b 
 
-
+" Open up NERDTree
+map <C-c>n <C-c>:NERDTree<CR>
 " Make NERDTree open by default.
 autocmd VimEnter * NERDTree
 " Close NERDTree when closing main split screen.
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Default python version for vim
+let g:syntastic_python_python_exec = 'python3'
