@@ -25,17 +25,17 @@ colorscheme monokai
 
 " Set vim transparent mode
 let t:is_transparent = 0                                                            
-function! Toggle_transparent_background()                                                       
+function! ToggleTransparentBackground()                                                       
   if t:is_transparent == 0                                                                      
     hi Normal guibg=NONE ctermbg=NONE
     let t:is_transparent = 1                                                                    
   else                                                                                          
     hi Normal guibg=#111111 ctermbg=black                                                       
-    colorscheme monokai
     let t:is_transparent = 0                                                                    
+    colorscheme monokai
   endif                                                                                         
 endfunction                                                                                     
-nnoremap <C-x>x :call Toggle_transparent_background()<CR>
+nnoremap <C-x>x :call ToggleTransparentBackground()<CR>
 
 let python_highlight_all=1
 
@@ -132,22 +132,29 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-c>c <C-c>:
 
-" Open terminal
-map <C-t>t <C-c>:terminal<CR><C-w>:resize -8<CR>. ./venv/bin/activate && clear<CR>
-"map <C-t>t <C-c>:terminal<CR><C-w>:resize -7<CR>clear<CR>
+"" Open terminal
+map <C-t>t <C-c>:terminal<CR><C-w>:resize -7<CR>. ./venv/bin/activate & clear<CR>
+
+"function! OpenTerminal()
+"  if !empty(expand(glob("venv")))
+"    <C-c>:terminal<CR><C-w>:resize -8<CR> clear<CR>. venv/bin/activate && clear<CR>
+"  else
+"    <C-c>:terminal<CR><C-w>:resize -8<CR> clear<CR>
+"  endif
+"endfunction
+"nnoremap <C-t>t :call OpenTerminal()<CR>
+
 
 " autocmd VimEnter * terminal 
 " autocmd VimEnter * resize 8
 
 " Display and select buffer. 
 map <C-b> <C-c>:w<CR><C-c>:ls b<CR>:b 
-
 " Open up NERDTree
 map <C-c>n <C-c>:NERDTree<CR>
 " Make NERDTree open by default.
 autocmd VimEnter * NERDTree
 " Close NERDTree when closing main split screen.
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
 " Default python version for vim
-let g:syntastic_python_python_exec = 'python3'
+let g:syntastic_python_python_exec = 'python3.8.11'
